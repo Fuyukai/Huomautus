@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "green.sailor.mc.testmod.generated",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "GeneratedBridgeMixinMinecraftClient"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
