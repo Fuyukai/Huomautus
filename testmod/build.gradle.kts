@@ -20,6 +20,7 @@ kapt {
     annotationProcessor("green.sailor.mc.huomautus.Processor")
     arguments {
         arg("sailor.huomautus.package", "green.sailor.mc.testmod.generated")
+        arg("sailor.huomautus.prefix", "TestMod")
     }
 }
 
@@ -36,6 +37,12 @@ dependencies {
     minecraft("com.mojang:minecraft:1.15.1")
     mappings("net.fabricmc:yarn:1.15.1+build.17:v2")
     modCompile("net.fabricmc:fabric-loader:0.7.3+build.176")
+
+    modImplementation(
+        group = "net.fabricmc",
+        name = "fabric-language-kotlin",
+        version = "1.3.61+build.1"
+    )
 
     implementation(kotlin("stdlib-jdk8"))
 

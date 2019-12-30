@@ -17,11 +17,9 @@
 
 package green.sailor.mc.huomautus.test
 
-import green.sailor.mc.testmod.generated.TestModBlocks
-import net.fabricmc.api.ModInitializer
+import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
+import net.minecraft.block.Block
+import net.minecraft.block.Material
 
-object MakeUp : ModInitializer {
-    override fun onInitialize() {
-        TestModBlocks.register()
-    }
-}
+@RegisterBlock("testmod:test_block")
+abstract class TestBlock : Block(Settings.of(Material.STONE))

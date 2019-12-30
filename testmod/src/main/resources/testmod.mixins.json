@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "green.sailor.mc.testmod.generated",
+  "package": "green.sailor.mc.testmod.generated.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],

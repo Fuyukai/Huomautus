@@ -17,7 +17,12 @@
   "icon": "assets/modid/icon.png",
 
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": [{
+      "adapter": "kotlin",
+      "value": "green.sailor.mc.huomautus.test.MakeUp"
+    }]
+  },
   "mixins": [
     "testmod.mixins.json"
   ],

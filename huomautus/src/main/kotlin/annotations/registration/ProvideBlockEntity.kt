@@ -15,13 +15,19 @@
  * along with huomautus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package green.sailor.mc.huomautus.test
+package green.sailor.mc.huomautus.annotations.registration
 
-import green.sailor.mc.testmod.generated.TestModBlocks
-import net.fabricmc.api.ModInitializer
+import kotlin.reflect.KClass
 
-object MakeUp : ModInitializer {
-    override fun onInitialize() {
-        TestModBlocks.register()
-    }
-}
+/**
+ * Marks a Block class as having a BlockEntity.
+ *
+ * This will make the concrete subclass being generated automatically implement BlockEntityProvider
+ * and return the appropriate BlockEntity object.
+ */
+@Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.CLASS)
+@MustBeDocumented
+annotation class ProvideBlockEntity(
+    val beClass: KClass<*>
+)

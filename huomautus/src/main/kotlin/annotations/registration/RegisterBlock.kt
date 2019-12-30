@@ -15,13 +15,21 @@
  * along with huomautus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package green.sailor.mc.huomautus.test
+package green.sailor.mc.huomautus.annotations.registration
 
-import green.sailor.mc.testmod.generated.TestModBlocks
-import net.fabricmc.api.ModInitializer
-
-object MakeUp : ModInitializer {
-    override fun onInitialize() {
-        TestModBlocks.register()
-    }
-}
+/**
+ * Marks a block to be registered.
+ *
+ * The block to be registered must be an abstract class; a concrete private implementation will be
+ * generated and automatically registered.
+ *
+ * @param identifier: The identifier to register with e.g. mymod:some_block.
+ * @param autoItemBlock: If a BlockItem should also be created and registered automatically.
+ */
+@Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.CLASS)
+@MustBeDocumented
+annotation class RegisterBlock(
+    val identifier: String,
+    val autoItemBlock: Boolean = true
+)

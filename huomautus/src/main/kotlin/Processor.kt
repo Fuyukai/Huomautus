@@ -18,6 +18,9 @@
 package green.sailor.mc.huomautus
 
 import green.sailor.mc.huomautus.annotations.MixinImpl
+import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
+import green.sailor.mc.huomautus.generators.BlocksGenerator
+import green.sailor.mc.huomautus.generators.ProcessorState
 import green.sailor.mc.huomautus.generators.generateJavaBridge
 import java.nio.file.Paths
 import javax.annotation.processing.AbstractProcessor
@@ -28,7 +31,11 @@ import javax.lang.model.element.ElementKind
 import javax.lang.model.element.TypeElement
 
 @Suppress("unused")
-@SupportedOptions("kapt.kotlin.generated", "sailor.huomautus.package")
+@SupportedOptions(
+    "kapt.kotlin.generated",
+    "sailor.huomautus.package",
+    "sailor.huomautus.prefix"
+)
 class Processor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(MixinImpl::class.java.name)
@@ -43,18 +50,29 @@ class Processor : AbstractProcessor() {
         roundEnv: RoundEnvironment?
     ): Boolean {
         if (roundEnv == null || roundEnv.processingOver()) return false
+
         val srcRoot = processingEnv.options["kapt.kotlin.generated"]
             ?: error("Cannot find source root")
+        val packageName = processingEnv.options["sailor.huomautus.package"]
+            ?: error("No package name specified!")
+        val prefixName = processingEnv.options["sailor.huomautus.prefix"]
+            ?: error("No prefix name specified!")
+
+        val state = ProcessorState(srcRoot, packageName, prefixName)
 
         val mixins = roundEnv.getElementsAnnotatedWith(MixinImpl::class.java)
         for (elem in mixins) {
             if (elem.kind != ElementKind.CLASS) {
                 error("Can only process class, not ${elem.kind}")
             }
-            val genPackage = processingEnv.options["sailor.huomautus.package"]!!
+            val genPackage = "$packageName.mixin"
             val bridge = generateJavaBridge(genPackage, elem as TypeElement)
             bridge.writeTo(Paths.get(srcRoot))
         }
+
+        val blockGenAnnos = roundEnv.getElementsAnnotatedWith(RegisterBlock::class.java)
+        val blockGen = BlocksGenerator(state)
+        blockGen.generateBlockRegistration(blockGenAnnos)
 
         return true
     }

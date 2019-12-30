@@ -15,13 +15,25 @@
  * along with huomautus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package green.sailor.mc.huomautus.test
+package green.sailor.mc.huomautus.generators
 
-import green.sailor.mc.testmod.generated.TestModBlocks
-import net.fabricmc.api.ModInitializer
+import com.squareup.kotlinpoet.*
 
-object MakeUp : ModInitializer {
-    override fun onInitialize() {
-        TestModBlocks.register()
-    }
+/**
+ * Represents the processor state.
+ */
+data class ProcessorState(
+    val srcRoot: String,
+    val genPackageName: String,
+    val genPrefix: String
+) {
+    val blocksClass = ClassName(
+        "$genPackageName.meta",
+        "${genPrefix}Blocks"
+    )
+
+    val itemsClass = ClassName(
+        "$genPackageName.meta",
+        "${genPrefix}Items"
+    )
 }
