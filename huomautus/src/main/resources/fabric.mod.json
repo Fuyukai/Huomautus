@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "fakemod",
+  "version": "0.0.1",
+
+  "name": "Fake mod used to crash the game",
+  "description": "You should never see this",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://sailor.green/",
+    "sources": "https://sailor.green/"
+  },
+
+  "license": "GPLv3",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [ "green.sailor.huomautus.MakeUp" ]
+  },
+  "mixins": [],
+
+  "depends": {},
+  "suggests": {}
+}
