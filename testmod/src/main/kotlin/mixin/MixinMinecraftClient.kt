@@ -17,7 +17,7 @@
 
 package green.sailor.mc.huomautus.test.mixin
 
-import green.sailor.mc.huomautus.MixinImpl
+import green.sailor.mc.huomautus.annotations.MixinImpl
 import net.minecraft.client.gui.screen.TitleScreen
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject

@@ -19,7 +19,7 @@
 package green.sailor.mc.huomautus.generators
 
 import com.squareup.javapoet.*
-import green.sailor.mc.huomautus.MixinImpl
+import green.sailor.mc.huomautus.annotations.MixinImpl
 import javax.lang.model.element.ExecutableElement
 import javax.lang.model.element.TypeElement
 import javax.lang.model.type.MirroredTypeException

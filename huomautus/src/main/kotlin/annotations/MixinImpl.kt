@@ -15,7 +15,7 @@
  * along with huomautus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package green.sailor.mc.huomautus
+package green.sailor.mc.huomautus.annotations
 
 import kotlin.reflect.KClass
 

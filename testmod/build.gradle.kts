@@ -31,8 +31,6 @@ sourceSets {
     }
 }
 
-
-
 dependencies {
     // Standard fabric stuff
     minecraft("com.mojang:minecraft:1.15.1")

@@ -17,6 +17,7 @@
 
 package green.sailor.mc.huomautus
 
+import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.generators.generateJavaBridge
 import java.nio.file.Paths
 import javax.annotation.processing.AbstractProcessor
@@ -26,12 +27,9 @@ import javax.lang.model.SourceVersion
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.TypeElement
 
+@Suppress("unused")
 @SupportedOptions("kapt.kotlin.generated", "sailor.huomautus.package")
 class Processor : AbstractProcessor() {
-    override fun getSupportedOptions(): MutableSet<String> {
-        return super.getSupportedOptions()
-    }
-
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(MixinImpl::class.java.name)
     }
