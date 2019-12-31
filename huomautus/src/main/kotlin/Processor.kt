@@ -20,6 +20,7 @@ package green.sailor.mc.huomautus
 import green.sailor.mc.huomautus.annotations.AutoAccessor
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
+import green.sailor.mc.huomautus.annotations.registration.RegisterBlockEntity
 import green.sailor.mc.huomautus.generators.BlocksGenerator
 import green.sailor.mc.huomautus.generators.ProcessorState
 import green.sailor.mc.huomautus.generators.accessor.AccessorGenerator
@@ -42,7 +43,8 @@ class Processor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(
             MixinImpl::class.java.name,
-            AutoAccessor::class.java.name
+            RegisterBlock::class.java.name,
+            RegisterBlockEntity::class.java.name
         )
     }
 
