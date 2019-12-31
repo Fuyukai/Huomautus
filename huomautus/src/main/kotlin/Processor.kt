@@ -17,13 +17,17 @@
 
 package green.sailor.mc.huomautus
 
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.PropertySpec
 import green.sailor.mc.huomautus.annotations.AutoAccessor
+import green.sailor.mc.huomautus.annotations.GenerateExtensions
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlockEntity
 import green.sailor.mc.huomautus.generators.BlocksGenerator
 import green.sailor.mc.huomautus.generators.ProcessorState
 import green.sailor.mc.huomautus.generators.accessor.AccessorGenerator
+import green.sailor.mc.huomautus.generators.accessorextentions.AccessorExtensionsGenerator
 import green.sailor.mc.huomautus.generators.generateJavaBridge
 import java.nio.file.Paths
 import javax.annotation.processing.AbstractProcessor
@@ -77,11 +81,15 @@ class Processor : AbstractProcessor() {
             bridge.writeTo(Paths.get(srcRoot))
         }
 
-        val autoAccessors = roundEnv.getElementsAnnotatedWith(AutoAccessor::class.java)
-        if (autoAccessors.isNotEmpty()) {
-            val gen = AccessorGenerator(state)
-            gen.generateAccessors(autoAccessors)
-        }
+        // all kotlin extensions
+        val extensionsFile = FileSpec.builder(packageName, "extensions")
+        roundEnv.getElementsAnnotatedWith(GenerateExtensions::class.java).flatMap {
+            it as? TypeElement ?: listOf<PropertySpec>()
+            AccessorExtensionsGenerator(state).generateExtensions(it as TypeElement)
+        }.forEach { extensionsFile.addProperty(it) }
+
+        extensionsFile.addComment("Automatically generated extensions. Do not edit!")
+        extensionsFile.build().writeTo(Paths.get(srcRoot))
 
         val blockGenAnnos = roundEnv.getElementsAnnotatedWith(RegisterBlock::class.java)
         if (blockGenAnnos.isNotEmpty()) {

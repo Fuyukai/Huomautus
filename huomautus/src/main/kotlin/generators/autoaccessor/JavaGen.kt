@@ -15,7 +15,7 @@
  * along with huomautus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package green.sailor.mc.huomautus.generators.accessor
+package green.sailor.mc.huomautus.generators.autoaccessor
 
 import com.squareup.javapoet.*
 import green.sailor.mc.huomautus.annotations.AutoAccessor

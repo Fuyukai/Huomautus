@@ -7,6 +7,7 @@ version = "0.1.0"
 
 repositories {
     mavenCentral()
+    maven(url = "https://repo.spongepowered.org/maven")
 }
 
 dependencies {
@@ -14,6 +15,9 @@ dependencies {
     implementation(kotlin("reflect"))
 
     // == DEPENDENCIES == //
+
+    // Mixin itself, for annotations
+    compileOnly(group = "org.spongepowered", name = "mixin", version = "0.8-SNAPSHOT")
 
     // Kotlin code generation
     implementation(group = "com.squareup", name = "kotlinpoet", version = "1.4.+")
