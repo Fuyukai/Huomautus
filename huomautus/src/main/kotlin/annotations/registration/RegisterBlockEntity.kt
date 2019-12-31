@@ -25,6 +25,9 @@ package green.sailor.mc.huomautus.annotations.registration
  *
  * @param identifier: The identifier to register with e.g. mymod:some_block.
  */
+@Retention(AnnotationRetention.SOURCE)
+@Target(AnnotationTarget.CLASS)
+@MustBeDocumented
 annotation class RegisterBlockEntity(
     val identifier: String
 )

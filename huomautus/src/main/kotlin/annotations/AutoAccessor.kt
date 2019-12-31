@@ -23,8 +23,8 @@ import kotlin.reflect.KClass
  * Generates an automatic accessor mixin for all unaccessible fields in a class.
  */
 @Retention(AnnotationRetention.SOURCE)
-@MustBeDocumented
 @Target(AnnotationTarget.CLASS)
+@MustBeDocumented
 annotation class AutoAccessor(
     val klass: KClass<*>
 )
