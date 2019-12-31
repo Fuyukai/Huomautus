@@ -66,3 +66,4 @@ atlassian-ide-plugin.xml
 
 run/
 docs/_build
+docs/.venv/
