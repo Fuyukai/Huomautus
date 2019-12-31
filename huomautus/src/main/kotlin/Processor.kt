@@ -22,7 +22,6 @@ import com.squareup.kotlinpoet.PropertySpec
 import green.sailor.mc.huomautus.annotations.GenerateExtensions
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
-import green.sailor.mc.huomautus.annotations.registration.RegisterBlockEntity
 import green.sailor.mc.huomautus.generators.BlocksGenerator
 import green.sailor.mc.huomautus.generators.ProcessorState
 import green.sailor.mc.huomautus.generators.accessorextentions.AccessorExtensionsGenerator
@@ -45,8 +44,9 @@ class Processor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(
             MixinImpl::class.java.name,
-            RegisterBlock::class.java.name,
-            RegisterBlockEntity::class.java.name
+            GenerateExtensions::class.java.name
+            /*RegisterBlock::class.java.name,
+            RegisterBlockEntity::class.java.name*/
         )
     }
 
@@ -90,7 +90,7 @@ class Processor : AbstractProcessor() {
         extensionsFile.build().writeTo(Paths.get(srcRoot))
 
         val blockGenAnnos = roundEnv.getElementsAnnotatedWith(RegisterBlock::class.java)
-        if (blockGenAnnos.isNotEmpty()) {
+        if (false && blockGenAnnos.isNotEmpty()) {
             val blockGen = BlocksGenerator(state)
             blockGen.generateBlockRegistration(blockGenAnnos)
         }

@@ -17,7 +17,6 @@
 
 package green.sailor.mc.huomautus.test
 
-import green.sailor.mc.testmod.generated.TestModBlocks
 import green.sailor.mc.testmod.generated.fpsCounter
 import kotlin.random.Random
 import net.fabricmc.api.ModInitializer
@@ -26,7 +25,7 @@ import net.minecraft.client.MinecraftClient
 
 object MakeUp : ModInitializer {
     override fun onInitialize() {
-        TestModBlocks.register()
+        // TestModBlocks.register()
         ServerTickCallback.EVENT.register(ServerTickCallback {
             if (Random.nextInt(20) == 1) {
                 println("FPS is: ${MinecraftClient.getInstance().fpsCounter}")
