@@ -37,6 +37,7 @@ dependencies {
     minecraft("com.mojang:minecraft:1.15.1")
     mappings("net.fabricmc:yarn:1.15.1+build.17:v2")
     modCompile("net.fabricmc:fabric-loader:0.7.3+build.176")
+    modCompile("net.fabricmc.fabric-api:fabric-api:0.4.26+build.283-1.15")
 
     modImplementation(
         group = "net.fabricmc",

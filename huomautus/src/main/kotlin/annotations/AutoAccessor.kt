@@ -15,22 +15,16 @@
  * along with huomautus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package green.sailor.mc.huomautus.test
+package green.sailor.mc.huomautus.annotations
 
-import green.sailor.mc.testmod.generated.TestModBlocks
-import green.sailor.mc.testmod.generated.fpsCounter
-import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.event.server.ServerTickCallback
-import net.minecraft.client.MinecraftClient
-import kotlin.random.Random
+import kotlin.reflect.KClass
 
-object MakeUp : ModInitializer {
-    override fun onInitialize() {
-        TestModBlocks.register()
-        ServerTickCallback.EVENT.register(ServerTickCallback {
-            if (Random.nextInt(20) == 1) {
-                println("FPS is: ${MinecraftClient.getInstance().fpsCounter}")
-            }
-        })
-    }
-}
+/**
+ * Generates an automatic accessor mixin for all unaccessible fields in a class.
+ */
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+@Target(AnnotationTarget.CLASS)
+annotation class AutoAccessor(
+    val klass: KClass<*>
+)

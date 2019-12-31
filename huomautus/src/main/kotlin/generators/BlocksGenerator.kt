@@ -84,7 +84,7 @@ class BlocksGenerator(val state: ProcessorState) {
             field.initializer("$name()")
             field.addModifiers(KModifier.PUBLIC)
             mainClass.addProperty(field.build())
-            mainClassRegister.addStatement("(${fieldName} as $name).register()")
+            mainClassRegister.addStatement("($fieldName as $name).register()")
 
             file.addType(implClass)
         }

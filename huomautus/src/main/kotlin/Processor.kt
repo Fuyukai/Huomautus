@@ -17,10 +17,12 @@
 
 package green.sailor.mc.huomautus
 
+import green.sailor.mc.huomautus.annotations.AutoAccessor
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
 import green.sailor.mc.huomautus.generators.BlocksGenerator
 import green.sailor.mc.huomautus.generators.ProcessorState
+import green.sailor.mc.huomautus.generators.accessor.AccessorGenerator
 import green.sailor.mc.huomautus.generators.generateJavaBridge
 import java.nio.file.Paths
 import javax.annotation.processing.AbstractProcessor
@@ -38,7 +40,10 @@ import javax.lang.model.element.TypeElement
 )
 class Processor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
-        return mutableSetOf(MixinImpl::class.java.name)
+        return mutableSetOf(
+            MixinImpl::class.java.name,
+            AutoAccessor::class.java.name
+        )
     }
 
     override fun getSupportedSourceVersion(): SourceVersion {
@@ -70,9 +75,17 @@ class Processor : AbstractProcessor() {
             bridge.writeTo(Paths.get(srcRoot))
         }
 
+        val autoAccessors = roundEnv.getElementsAnnotatedWith(AutoAccessor::class.java)
+        if (autoAccessors.isNotEmpty()) {
+            val gen = AccessorGenerator(state)
+            gen.generateAccessors(autoAccessors)
+        }
+
         val blockGenAnnos = roundEnv.getElementsAnnotatedWith(RegisterBlock::class.java)
-        val blockGen = BlocksGenerator(state)
-        blockGen.generateBlockRegistration(blockGenAnnos)
+        if (blockGenAnnos.isNotEmpty()) {
+            val blockGen = BlocksGenerator(state)
+            blockGen.generateBlockRegistration(blockGenAnnos)
+        }
 
         return true
     }
