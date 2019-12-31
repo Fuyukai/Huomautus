@@ -19,10 +19,10 @@ package green.sailor.mc.huomautus.test
 
 import green.sailor.mc.testmod.generated.TestModBlocks
 import green.sailor.mc.testmod.generated.fpsCounter
+import kotlin.random.Random
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.server.ServerTickCallback
 import net.minecraft.client.MinecraftClient
-import kotlin.random.Random
 
 object MakeUp : ModInitializer {
     override fun onInitialize() {

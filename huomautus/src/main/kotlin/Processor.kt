@@ -19,14 +19,12 @@ package green.sailor.mc.huomautus
 
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.PropertySpec
-import green.sailor.mc.huomautus.annotations.AutoAccessor
 import green.sailor.mc.huomautus.annotations.GenerateExtensions
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlockEntity
 import green.sailor.mc.huomautus.generators.BlocksGenerator
 import green.sailor.mc.huomautus.generators.ProcessorState
-import green.sailor.mc.huomautus.generators.accessor.AccessorGenerator
 import green.sailor.mc.huomautus.generators.accessorextentions.AccessorExtensionsGenerator
 import green.sailor.mc.huomautus.generators.generateJavaBridge
 import java.nio.file.Paths
