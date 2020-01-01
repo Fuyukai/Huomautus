@@ -22,10 +22,10 @@ import com.squareup.kotlinpoet.PropertySpec
 import green.sailor.mc.huomautus.annotations.GenerateExtensions
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
-import green.sailor.mc.huomautus.generators.registration.BlocksGenerator
 import green.sailor.mc.huomautus.generators.ProcessorState
 import green.sailor.mc.huomautus.generators.accessorextentions.AccessorExtensionsGenerator
 import green.sailor.mc.huomautus.generators.generateJavaBridge
+import green.sailor.mc.huomautus.generators.registration.BlocksGenerator
 import java.nio.file.Paths
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.RoundEnvironment
