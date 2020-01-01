@@ -61,7 +61,7 @@ class BlocksGenerator(val state: ProcessorState) {
 
     fun generateBlockRegistration(items: Set<Element>) {
         val file = FileSpec.builder(
-            state.genPackageName, state.blocksClass.simpleName
+            state.metaPackageName, state.blocksClass.simpleName
         )
         file.indent("   ")
         val mainClass = TypeSpec.objectBuilder(state.blocksClass)
@@ -73,7 +73,7 @@ class BlocksGenerator(val state: ProcessorState) {
             // only process classes...
             if (annotated !is TypeElement) continue
             if (!annotated.modifiers.contains(Modifier.ABSTRACT)) {
-                error("$annotated is not abstract!")
+                error("Class $annotated is not abstract!")
             }
             val anno = annotated.getAnnotation(RegisterBlock::class.java)
 
@@ -102,6 +102,10 @@ class BlocksGenerator(val state: ProcessorState) {
             // itemblock registration
             if (anno.autoItemBlock) {
                 val itemGroupId = anno.inItemGroup
+                // either load or build a new item group field
+                // this will make a lazy-delegated field that searches for the item group
+                // in the list of item groups by identifier
+                // not pretty. but it'll do.
                 val itemGroupField = if (itemGroupId !in itemGroupTempFields) {
                     val igField = generateItemGroupCacher(itemGroupId)
                     mainClass.addProperty(igField)
@@ -117,6 +121,7 @@ class BlocksGenerator(val state: ProcessorState) {
                 mainClassRegister.addCode(ibRegStmnt)
             }
 
+            // finish up by adding the actual type object
             file.addType(implClass)
         }
 

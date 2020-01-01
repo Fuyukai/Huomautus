@@ -22,9 +22,11 @@ import com.squareup.kotlinpoet.PropertySpec
 import green.sailor.mc.huomautus.annotations.GenerateExtensions
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
+import green.sailor.mc.huomautus.annotations.registration.RegisterBlockEntity
 import green.sailor.mc.huomautus.generators.ProcessorState
 import green.sailor.mc.huomautus.generators.accessorextentions.AccessorExtensionsGenerator
 import green.sailor.mc.huomautus.generators.generateJavaBridge
+import green.sailor.mc.huomautus.generators.registration.BlockEntitiesGenerator
 import green.sailor.mc.huomautus.generators.registration.BlocksGenerator
 import java.nio.file.Paths
 import javax.annotation.processing.AbstractProcessor
@@ -33,6 +35,7 @@ import javax.annotation.processing.SupportedOptions
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.TypeElement
+import javax.tools.Diagnostic
 
 @Suppress("unused")
 @SupportedOptions(
@@ -44,9 +47,9 @@ class Processor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(
             MixinImpl::class.java.name,
-            GenerateExtensions::class.java.name
-            /*RegisterBlock::class.java.name,
-            RegisterBlockEntity::class.java.name*/
+            GenerateExtensions::class.java.name,
+            RegisterBlock::class.java.name,
+            RegisterBlockEntity::class.java.name
         )
     }
 
@@ -93,6 +96,12 @@ class Processor : AbstractProcessor() {
         if (blockGenAnnos.isNotEmpty()) {
             val blockGen = BlocksGenerator(state)
             blockGen.generateBlockRegistration(blockGenAnnos)
+        }
+
+        val beGenAnnos = roundEnv.getElementsAnnotatedWith(RegisterBlockEntity::class.java)
+        if (beGenAnnos.isNotEmpty()) {
+            val beGen = BlockEntitiesGenerator(state)
+            beGen.generateBERegistration(beGenAnnos)
         }
 
         return true

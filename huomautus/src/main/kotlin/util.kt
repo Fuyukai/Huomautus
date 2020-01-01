@@ -35,3 +35,15 @@ fun <T> T.getClassMirror(field: (T) -> KClass<*>): TypeMirror {
         e.typeMirrors.first()
     }
 }
+
+/**
+ * Gets a list of class mirrors from a field annotation.
+ */
+fun <T> T.getClassMirrors(field: (T) -> List<KClass<*>>): List<TypeMirror> {
+    try {
+        field(this)
+        error("Must never happen")
+    } catch (e: MirroredTypesException) {
+        return e.typeMirrors
+    }
+}

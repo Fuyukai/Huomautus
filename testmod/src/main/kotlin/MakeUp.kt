@@ -17,7 +17,8 @@
 
 package green.sailor.mc.huomautus.test
 
-import green.sailor.mc.testmod.generated.TestModBlocks
+import green.sailor.mc.testmod.generated.meta.TestModBlockEntities
+import green.sailor.mc.testmod.generated.meta.TestModBlocks
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.minecraft.util.Identifier
@@ -28,5 +29,6 @@ object MakeUp : ModInitializer {
 
     override fun onInitialize() {
         TestModBlocks.register()
+        TestModBlockEntities.register()
     }
 }

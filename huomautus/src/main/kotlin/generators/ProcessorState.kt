@@ -27,9 +27,16 @@ data class ProcessorState(
     val genPackageName: String,
     val genPrefix: String
 ) {
+    val metaPackageName = "$genPackageName.meta"
+
     val blocksClass = ClassName(
         "$genPackageName.meta",
         "${genPrefix}Blocks"
+    )
+
+    val beClass = ClassName(
+        "$genPackageName.meta",
+        "${genPrefix}BlockEntities"
     )
 
     val itemsClass = ClassName(

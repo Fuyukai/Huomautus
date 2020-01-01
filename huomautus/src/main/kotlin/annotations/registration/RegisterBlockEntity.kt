@@ -24,10 +24,12 @@ package green.sailor.mc.huomautus.annotations.registration
  * generated and automatically registered.
  *
  * @param identifier: The identifier to register with e.g. mymod:some_block.
+ * @param blocks: A list of identifiers for blocks registered for this BlockEntity.
  */
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)
 @MustBeDocumented
 annotation class RegisterBlockEntity(
-    val identifier: String
+    val identifier: String,
+    val blocks: Array<String>
 )
