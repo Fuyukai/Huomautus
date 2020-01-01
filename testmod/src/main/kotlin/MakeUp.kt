@@ -17,19 +17,16 @@
 
 package green.sailor.mc.huomautus.test
 
-import green.sailor.mc.testmod.generated.fpsCounter
-import kotlin.random.Random
+import green.sailor.mc.testmod.generated.TestModBlocks
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.event.server.ServerTickCallback
-import net.minecraft.client.MinecraftClient
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
+import net.minecraft.util.Identifier
 
 object MakeUp : ModInitializer {
+    val itemGroup =
+        FabricItemGroupBuilder.create(Identifier("testmod:group")).build()
+
     override fun onInitialize() {
-        // TestModBlocks.register()
-        ServerTickCallback.EVENT.register(ServerTickCallback {
-            if (Random.nextInt(20) == 1) {
-                println("FPS is: ${MinecraftClient.getInstance().fpsCounter}")
-            }
-        })
+        TestModBlocks.register()
     }
 }

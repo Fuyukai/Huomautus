@@ -15,10 +15,11 @@
  * along with huomautus.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package green.sailor.mc.huomautus.generators
+package green.sailor.mc.huomautus.generators.registration
 
 import com.squareup.kotlinpoet.*
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
+import green.sailor.mc.huomautus.generators.ProcessorState
 import java.nio.file.Paths
 import javax.lang.model.element.Element
 import javax.lang.model.element.Modifier
@@ -28,10 +29,6 @@ import javax.lang.model.element.TypeElement
  * Represents the block class generator.
  */
 class BlocksGenerator(val state: ProcessorState) {
-    companion object {
-        val identifierClassname = ClassName("net.minecraft.util", "Identifier")
-        val registryClassname = ClassName("net.minecraft.util.registry", "Registry")
-    }
 
     /**
      * Generates a register function for a block.
@@ -39,14 +36,27 @@ class BlocksGenerator(val state: ProcessorState) {
     fun generateRegisterSpec(name: String): FunSpec {
         val method = FunSpec.builder("register").apply {
             addKdoc("Registers this block in the Block registry.")
-            addStatement("val identifier = %T(\"$name\")", identifierClassname)
+            addStatement("val identifier = %T(\"$name\")", IDENTIFIER)
             addStatement(
                 "%T.register(%T.BLOCK, identifier, this)",
-                registryClassname, registryClassname
+                REGISTRY,
+                REGISTRY
             )
             returns(Unit::class.java)
         }.build()
         return method
+    }
+
+    /**
+     * Generates a BlockItem registry specification.
+     */
+    fun generateBIRegisterSpec(fieldName: String, name: String, group: String): CodeBlock {
+        return CodeBlock.of(
+            "%T.register(%T.ITEM, %T(\"$name\"), %T($fieldName, %T().group($group)))",
+            REGISTRY, REGISTRY,
+            IDENTIFIER,
+            BLOCK_ITEM, ITEM_SETTINGS
+        )
     }
 
     fun generateBlockRegistration(items: Set<Element>) {
@@ -56,6 +66,9 @@ class BlocksGenerator(val state: ProcessorState) {
         file.indent("   ")
         val mainClass = TypeSpec.objectBuilder(state.blocksClass)
         val mainClassRegister = FunSpec.builder("register")
+        // map of temp item group field getters
+        val itemGroupTempFields = mutableMapOf<String, PropertySpec>()
+
         for (annotated in items) {
             // only process classes...
             if (annotated !is TypeElement) continue
@@ -85,6 +98,24 @@ class BlocksGenerator(val state: ProcessorState) {
             field.addModifiers(KModifier.PUBLIC)
             mainClass.addProperty(field.build())
             mainClassRegister.addStatement("($fieldName as $name).register()")
+
+            // itemblock registration
+            if (anno.autoItemBlock) {
+                val itemGroupId = anno.inItemGroup
+                val itemGroupField = if (itemGroupId !in itemGroupTempFields) {
+                    val igField = generateItemGroupCacher(itemGroupId)
+                    mainClass.addProperty(igField)
+                    itemGroupTempFields[itemGroupId] = igField
+                    igField.name
+                } else {
+                    itemGroupTempFields[itemGroupId]!!.name
+                }
+
+                val ibRegStmnt = generateBIRegisterSpec(
+                    fieldName, anno.identifier, itemGroupField
+                )
+                mainClassRegister.addCode(ibRegStmnt)
+            }
 
             file.addType(implClass)
         }

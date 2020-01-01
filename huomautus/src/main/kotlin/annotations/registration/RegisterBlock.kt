@@ -25,11 +25,13 @@ package green.sailor.mc.huomautus.annotations.registration
  *
  * @param identifier: The identifier to register with e.g. mymod:some_block.
  * @param autoItemBlock: If a BlockItem should also be created and registered automatically.
+ * @param inItemGroup: The name of the item group to add the created BlockItem to.
  */
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)
 @MustBeDocumented
 annotation class RegisterBlock(
     val identifier: String,
-    val autoItemBlock: Boolean = true
+    val autoItemBlock: Boolean = true,
+    val inItemGroup: String = ""
 )

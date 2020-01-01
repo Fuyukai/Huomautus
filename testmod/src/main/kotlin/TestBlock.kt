@@ -21,5 +21,5 @@ import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Material
 
-@RegisterBlock("testmod:test_block")
+@RegisterBlock("testmod:test_block", inItemGroup = "testmod:group")
 abstract class TestBlock : Block(Settings.of(Material.STONE))

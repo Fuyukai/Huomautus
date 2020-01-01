@@ -22,7 +22,7 @@ import com.squareup.kotlinpoet.PropertySpec
 import green.sailor.mc.huomautus.annotations.GenerateExtensions
 import green.sailor.mc.huomautus.annotations.MixinImpl
 import green.sailor.mc.huomautus.annotations.registration.RegisterBlock
-import green.sailor.mc.huomautus.generators.BlocksGenerator
+import green.sailor.mc.huomautus.generators.registration.BlocksGenerator
 import green.sailor.mc.huomautus.generators.ProcessorState
 import green.sailor.mc.huomautus.generators.accessorextentions.AccessorExtensionsGenerator
 import green.sailor.mc.huomautus.generators.generateJavaBridge
@@ -90,7 +90,7 @@ class Processor : AbstractProcessor() {
         extensionsFile.build().writeTo(Paths.get(srcRoot))
 
         val blockGenAnnos = roundEnv.getElementsAnnotatedWith(RegisterBlock::class.java)
-        if (false && blockGenAnnos.isNotEmpty()) {
+        if (blockGenAnnos.isNotEmpty()) {
             val blockGen = BlocksGenerator(state)
             blockGen.generateBlockRegistration(blockGenAnnos)
         }

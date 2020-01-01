@@ -5,8 +5,7 @@
   "mixins": [
   ],
   "client": [
-    "GeneratedBridgeMixinMinecraftClient",
-    "MinecraftClientAccessor"
+    "GeneratedBridgeMixinMinecraftClient"
   ],
   "injectors": {
     "defaultRequire": 1
