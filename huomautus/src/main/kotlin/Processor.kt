@@ -41,15 +41,16 @@ import javax.tools.Diagnostic
 @SupportedOptions(
     "kapt.kotlin.generated",
     "sailor.huomautus.package",
-    "sailor.huomautus.prefix"
+    "sailor.huomautus.prefix",
+    "org.gradle.annotation.processing.aggregating"
 )
 class Processor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(
             MixinImpl::class.java.name,
-            GenerateExtensions::class.java.name,
-            RegisterBlock::class.java.name,
-            RegisterBlockEntity::class.java.name
+            GenerateExtensions::class.java.name
+            /*RegisterBlock::class.java.name,
+            RegisterBlockEntity::class.java.name*/
         )
     }
 

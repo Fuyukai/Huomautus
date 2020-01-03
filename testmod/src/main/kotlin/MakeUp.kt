@@ -28,7 +28,8 @@ object MakeUp : ModInitializer {
         FabricItemGroupBuilder.create(Identifier("testmod:group")).build()
 
     override fun onInitialize() {
-        TestModBlocks.register()
-        TestModBlockEntities.register()
+        println("make up!")
+        //TestModBlocks.register()
+        //TestModBlockEntities.register()
     }
 }
