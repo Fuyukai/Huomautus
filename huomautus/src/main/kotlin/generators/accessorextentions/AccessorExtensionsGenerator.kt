@@ -41,8 +41,8 @@ class AccessorExtensionsGenerator(val state: ProcessorState) {
     fun generateExtensions(accessor: TypeElement): List<PropertySpec> {
         // list of field namees
         val setters = accessor.enclosedElements
-            .filter { it.simpleName.startsWith("set") }
             .map { it.simpleName.toString() }
+            .filter { it.startsWith("set") }
             .toSet()
 
         val elements = accessor.enclosedElements
